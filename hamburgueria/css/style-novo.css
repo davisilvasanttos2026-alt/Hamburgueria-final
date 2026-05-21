@@ -1,0 +1,478 @@
+/*
+  CSS melhorado para o site (Royal Burger)
+  Observações:
+  - Remove duplicações de seletores .Pedidos
+  - Ajusta tipografia, espaçamentos e responsividade
+  - Adiciona estilos para resultados de pedido/contato e carrossel
+*/
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0f0f10;
+  --panel:#1b1b1e;
+  --panel-2:#222225;
+  --text:#fff;
+  --muted:#b9b9c3;
+  --muted-2:#8f8f98;
+  --danger:#e63946;
+  --danger-2:#ff4d5a;
+  --accent:#00ff88;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(900px 400px at 20% -10%, rgba(230,57,70,.20), transparent 55%),
+              radial-gradient(700px 350px at 80% 0%, rgba(0,255,136,.10), transparent 60%),
+              var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+
+img{max-width:100%;display:block}
+
+/* =====================
+   Layout base
+===================== */
+
+main{width:100%}
+
+section, div{padding:20px}
+
+h2{
+  text-align:center;
+  color:var(--danger);
+  margin-bottom:18px;
+  font-size:clamp(24px, 3vw, 34px);
+}
+
+h3{
+  text-align:center;
+  margin-bottom:14px;
+  font-size:clamp(18px, 2.3vw, 22px);
+}
+
+/* =====================
+   Header / Nav
+===================== */
+
+.cabecalho{
+  background-color:#121214;
+  text-align:center;
+  padding:28px 18px;
+  border-bottom:2px solid var(--danger);
+}
+
+.cabecalho h1{
+  color:var(--danger);
+  font-size:clamp(26px, 4vw, 40px);
+  margin-bottom:10px;
+}
+
+.cabecalho p{color:var(--muted); margin-bottom:18px;}
+
+.navegacao{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.navegacao a{
+  color:var(--text);
+  text-decoration:none;
+  transition:.25s;
+  font-weight:700;
+  padding:8px 12px;
+  border-radius:10px;
+}
+
+.navegacao a:hover{color:var(--text); background:rgba(230,57,70,.18); box-shadow:0 0 0 1px rgba(230,57,70,.25) inset;}
+
+/* =====================
+   Carrossel
+===================== */
+
+.carousel-container{
+  width:100%;
+  position:relative;
+  overflow:hidden;
+}
+
+.slide{display:none}
+
+.slide img{
+  width:100%;
+  height:520px;
+  object-fit:cover;
+  filter:saturate(1.05) contrast(1.03);
+}
+
+/* fade (usa sua lógica JS) */
+.fade{animation:fadeEffect .7s ease-in-out}
+@keyframes fadeEffect{
+  from{opacity:.2}
+  to{opacity:1}
+}
+
+.prev, .next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  padding:14px 16px;
+  font-size:22px;
+  color:#fff;
+  background:rgba(0,0,0,.35);
+  border-radius:10px;
+  transition:.25s;
+}
+
+.prev{left:14px}
+.next{right:14px}
+
+.prev:hover, .next:hover{background:rgba(0,0,0,.7)}
+
+.dots-container{text-align:center; margin-top:10px}
+.dot{
+  width:12px;
+  height:12px;
+  background-color:#bbb;
+  display:inline-block;
+  border-radius:50%;
+  margin:0 6px;
+  cursor:pointer;
+  transition:.25s;
+}
+.dot.active, .dot:hover{background-color:var(--danger)}
+
+/* =====================
+   Cardapio (listas)
+===================== */
+
+.menu{
+  max-width:1100px;
+  margin:auto;
+}
+
+.menu ul{list-style:none; margin-bottom:22px; display:grid; gap:10px; padding:0 10px;}
+
+.menu li{
+  background-color:#1f1f1f;
+  margin:10px 0;
+  padding:14px 16px;
+  border-radius:12px;
+  transition:.25s;
+  box-shadow:0 0 0 1px rgba(255,255,255,.03) inset;
+}
+
+.menu li:hover{transform:translateY(-2px); background-color:#242428; box-shadow:0 0 0 1px rgba(230,57,70,.30) inset;}
+
+.bio{
+  max-width:1000px;
+  margin:auto;
+  text-align:center;
+}
+
+.bio strong{font-weight:600; color:#dedee6}
+
+/* =====================
+   Cards de Combos
+===================== */
+
+.cards-container{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  gap:22px;
+  flex-wrap:nowrap;
+  margin-top:26px;
+  overflow-x:auto;
+  padding:0 12px;
+  scroll-snap-type:x mandatory;
+}
+
+.cards-container::-webkit-scrollbar{height:10px}
+.cards-container::-webkit-scrollbar-thumb{background:rgba(230,57,70,.35); border-radius:999px}
+
+.card{
+  min-width:270px;
+  max-width:270px;
+  background:linear-gradient(180deg, rgba(34,34,38,.92), rgba(21,21,24,.92));
+  border:1px solid rgba(230,57,70,.35);
+  border-radius:18px;
+  overflow:hidden;
+  transition:.28s;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  position:relative;
+  scroll-snap-align:start;
+}
+
+/* borda glow */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  background:radial-gradient(600px 200px at 20% 0%, rgba(230,57,70,.35), transparent 55%),
+             radial-gradient(500px 200px at 90% 20%, rgba(0,255,136,.16), transparent 60%);
+  opacity:.0;
+  transition:.28s;
+  pointer-events:none;
+}
+
+.card:hover{
+  transform:translateY(-12px);
+  border-color:rgba(255,82,82,.85);
+  box-shadow:0 18px 46px rgba(255,82,82,.14);
+}
+
+.card:hover::before{opacity:1}
+
+/* imagem com overlay */
+.card img{
+  width:100%;
+  height:225px;
+  object-fit:cover;
+  transform:scale(1.02);
+  transition:.35s;
+  filter:saturate(1.05) contrast(1.03);
+}
+
+.card:hover img{transform:scale(1.06)}
+
+.card-content{
+  padding:20px 18px 14px;
+  text-align:center;
+}
+
+.card h3{
+  color:#ff5252;
+  font-size:23px;
+  margin-bottom:8px;
+  letter-spacing:.2px;
+  text-shadow:0 0 18px rgba(230,57,70,.15);
+}
+
+.card p{
+  color:#ccc;
+  margin:10px 0 14px;
+  min-height:44px;
+  font-size:14.5px;
+}
+
+.card-footer{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:10px 0 18px;
+}
+
+.preco{
+  font-size:26px;
+  font-weight:950;
+  color:#fff;
+  position:relative;
+}
+
+.preco::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:-6px;
+  width:72px;
+  height:2px;
+  background:linear-gradient(90deg, transparent, rgba(0,255,136,.85), transparent);
+  opacity:.55;
+}
+
+
+/* =====================
+   Pedidos / Carrinho
+===================== */
+
+.Pedidos{
+  max-width:1000px;
+  margin:60px auto;
+  background-color:rgba(27,27,30,.92);
+  border:2px solid rgba(230,57,70,.65);
+  border-radius:18px;
+  padding:36px;
+  box-shadow:var(--shadow);
+}
+
+.Pedidos h2{margin-bottom:16px; font-size:clamp(26px, 3vw, 38px)}
+
+.pedido-subtitulo{ text-align:center; color:var(--muted-2); margin-bottom:30px; font-size:clamp(14px, 2vw, 16px)}
+
+.pedido-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.input-box{display:flex; flex-direction:column}
+
+.input-box label{margin-bottom:8px; font-weight:800; color:#fff}
+
+.Pedidos select,
+.Pedidos input{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background-color:var(--panel-2);
+  color:#fff;
+  outline:none;
+  transition:.25s;
+}
+
+.Pedidos textarea{width:100%; padding:14px; border-radius:12px; border:none; background-color:var(--panel-2); color:#fff; outline:none}
+
+.Pedidos select:focus,
+.Pedidos input:focus,
+.Pedidos textarea:focus{
+  border:1px solid rgba(230,57,70,.8);
+  box-shadow:0 0 0 3px rgba(230,57,70,.15);
+}
+
+.totalBox{
+  margin-top:26px;
+  background-color:var(--panel-2);
+  border-radius:14px;
+  padding:22px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.totalBox h3{margin-bottom:8px; color:#fff; font-size:18px}
+
+#total{font-size:clamp(26px, 3vw, 36px); font-weight:900; color:var(--accent)}
+
+.btn-pedido{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background-color:var(--danger);
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.btn-pedido:hover{background-color:var(--danger-2); transform:translateY(-2px); box-shadow:0 12px 30px rgba(230,57,70,.22)}
+
+#resultadoPedido{margin-top:18px; text-align:center; display:none;}
+
+.erro{color:#ffb3b3}
+.sucesso{color:#00ff88}
+
+/* =====================
+   Contato
+===================== */
+
+.final{
+  max-width:900px;
+  margin:auto;
+  background-color:rgba(27,27,30,.92);
+  border-radius:15px;
+  padding:30px;
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.final label{display:block; margin-top:14px; margin-bottom:6px; font-weight:800}
+
+.final input, .final textarea{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background-color:var(--panel-2);
+  color:#fff;
+  outline:none;
+}
+
+.final textarea{resize:none; height:120px}
+
+.final input:focus, .final textarea:focus{
+  border:1px solid rgba(230,57,70,.8);
+  box-shadow:0 0 0 3px rgba(230,57,70,.15);
+}
+
+.final button{
+  width:100%;
+  margin-top:20px;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background-color:var(--danger);
+  color:#fff;
+  font-size:18px;
+  cursor:pointer;
+  transition:.25s;
+  font-weight:900;
+}
+
+.final button:hover{background-color:var(--danger-2); transform:translateY(-2px)}
+
+#resultadoContato{margin-top:18px; text-align:center;}
+
+/* =====================
+   Clientes
+===================== */
+
+.clientes{max-width:1000px; margin:60px auto; padding:0 12px}
+
+.cliente-card{
+  background-color:#1f1f1f;
+  border-left:5px solid var(--danger);
+  padding:25px;
+  border-radius:15px;
+  margin-bottom:20px;
+  transition:.25s;
+}
+
+.cliente-card:hover{transform:translateY(-5px); background-color:#232327}
+
+.cliente-card h2{color:#fff; text-align:left; margin-bottom:10px}
+.cliente-card p{color:#ccc; text-align:left}
+.cliente-card span{font-size:22px; color:#ffd166}
+
+/* =====================
+   Rodapé
+===================== */
+
+footer{
+  background-color:#121214;
+  padding:30px 12px;
+  margin-top:50px;
+  text-align:center;
+  border-top:2px solid var(--danger);
+}
+
+#rodape p{color:#d3d3dd}
+
+/* =====================
+   Responsivo
+===================== */
+
+@media(max-width:900px){
+  .slide img{height:360px}
+  .pedido-grid{grid-template-columns:1fr}
+  .card{min-width:240px; max-width:240px}
+}
+
+@media(max-width:480px){
+  .cabecalho{padding:22px 12px}
+  .navegacao{gap:10px}
+  .prev{left:8px} .next{right:8px}
+  .slide img{height:270px}
+  .Ped id{} /* (placeholder) */
+}
+
