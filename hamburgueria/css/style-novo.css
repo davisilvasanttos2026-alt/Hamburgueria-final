@@ -1,12 +1,8 @@
-/*
-  CSS melhorado para o site (Royal Burger)
-  Observações:
-  - Remove duplicações de seletores .Pedidos
-  - Ajusta tipografia, espaçamentos e responsividade
-  - Adiciona estilos para resultados de pedido/contato e carrossel
-*/
-
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
 :root{
   --bg:#0f0f10;
@@ -21,24 +17,39 @@
   --shadow:0 10px 30px rgba(0,0,0,.35);
 }
 
-body{
-  font-family: Arial, Helvetica, sans-serif;
-  background: radial-gradient(900px 400px at 20% -10%, rgba(230,57,70,.20), transparent 55%),
-              radial-gradient(700px 350px at 80% 0%, rgba(0,255,136,.10), transparent 60%),
-              var(--bg);
-  color:var(--text);
-  line-height:1.6;
+html{
+  scroll-behavior:smooth;
 }
 
-img{max-width:100%;display:block}
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:
+  radial-gradient(900px 400px at 20% -10%, rgba(230,57,70,.20), transparent 55%),
+  radial-gradient(700px 350px at 80% 0%, rgba(0,255,136,.10), transparent 60%),
+  var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
 
-/* =====================
-   Layout base
-===================== */
+img{
+  max-width:100%;
+  display:block;
+}
 
-main{width:100%}
+main{
+  width:100%;
+}
 
-section, div{padding:20px}
+section,
+div{
+  padding:20px;
+}
+
+h1,h2,h3{
+  font-weight:900;
+  letter-spacing:.3px;
+}
 
 h2{
   text-align:center;
@@ -53,46 +64,66 @@ h3{
   font-size:clamp(18px, 2.3vw, 22px);
 }
 
-/* =====================
-   Header / Nav
-===================== */
-
 .cabecalho{
-  background-color:#121214;
+  background:rgba(18,18,20,.92);
+  backdrop-filter:blur(12px);
   text-align:center;
-  padding:28px 18px;
+  padding:30px 18px;
   border-bottom:2px solid var(--danger);
+  position:sticky;
+  top:0;
+  z-index:999;
 }
 
 .cabecalho h1{
   color:var(--danger);
-  font-size:clamp(26px, 4vw, 40px);
+  font-size:clamp(28px, 4vw, 42px);
   margin-bottom:10px;
+  text-shadow:0 0 25px rgba(230,57,70,.25);
 }
 
-.cabecalho p{color:var(--muted); margin-bottom:18px;}
+.cabecalho p{
+  color:var(--muted);
+  margin-bottom:18px;
+  font-size:15px;
+}
 
 .navegacao{
   display:flex;
   justify-content:center;
-  gap:16px;
+  align-items:center;
+  gap:14px;
   flex-wrap:wrap;
 }
 
 .navegacao a{
   color:var(--text);
   text-decoration:none;
-  transition:.25s;
+  transition:.25s ease;
   font-weight:700;
-  padding:8px 12px;
-  border-radius:10px;
+  padding:10px 16px;
+  border-radius:12px;
+  position:relative;
+  overflow:hidden;
 }
 
-.navegacao a:hover{color:var(--text); background:rgba(230,57,70,.18); box-shadow:0 0 0 1px rgba(230,57,70,.25) inset;}
+.navegacao a::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, rgba(230,57,70,.12), rgba(255,255,255,.04));
+  opacity:0;
+  transition:.25s;
+}
 
-/* =====================
-   Carrossel
-===================== */
+.navegacao a:hover::before{
+  opacity:1;
+}
+
+.navegacao a:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(230,57,70,.25) inset;
+}
 
 .carousel-container{
   width:100%;
@@ -100,7 +131,9 @@ h3{
   overflow:hidden;
 }
 
-.slide{display:none}
+.slide{
+  display:none;
+}
 
 .slide img{
   width:100%;
@@ -109,32 +142,56 @@ h3{
   filter:saturate(1.05) contrast(1.03);
 }
 
-/* fade (usa sua lógica JS) */
-.fade{animation:fadeEffect .7s ease-in-out}
-@keyframes fadeEffect{
-  from{opacity:.2}
-  to{opacity:1}
+.fade{
+  animation:fadeEffect .7s ease-in-out;
 }
 
-.prev, .next{
+@keyframes fadeEffect{
+  from{
+    opacity:.2;
+    transform:scale(1.01);
+  }
+
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.prev,
+.next{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
   cursor:pointer;
-  padding:14px 16px;
+  padding:14px 18px;
   font-size:22px;
   color:#fff;
   background:rgba(0,0,0,.35);
-  border-radius:10px;
+  border-radius:12px;
   transition:.25s;
+  backdrop-filter:blur(4px);
 }
 
-.prev{left:14px}
-.next{right:14px}
+.prev{
+  left:14px;
+}
 
-.prev:hover, .next:hover{background:rgba(0,0,0,.7)}
+.next{
+  right:14px;
+}
 
-.dots-container{text-align:center; margin-top:10px}
+.prev:hover,
+.next:hover{
+  background:rgba(0,0,0,.75);
+  transform:translateY(-50%) scale(1.05);
+}
+
+.dots-container{
+  text-align:center;
+  margin-top:10px;
+}
+
 .dot{
   width:12px;
   height:12px;
@@ -145,29 +202,12 @@ h3{
   cursor:pointer;
   transition:.25s;
 }
-.dot.active, .dot:hover{background-color:var(--danger)}
 
-/* =====================
-   Cardapio (listas)
-===================== */
-
-.menu{
-  max-width:1100px;
-  margin:auto;
+.dot.active,
+.dot:hover{
+  background-color:var(--danger);
+  transform:scale(1.15);
 }
-
-.menu ul{list-style:none; margin-bottom:22px; display:grid; gap:10px; padding:0 10px;}
-
-.menu li{
-  background-color:#1f1f1f;
-  margin:10px 0;
-  padding:14px 16px;
-  border-radius:12px;
-  transition:.25s;
-  box-shadow:0 0 0 1px rgba(255,255,255,.03) inset;
-}
-
-.menu li:hover{transform:translateY(-2px); background-color:#242428; box-shadow:0 0 0 1px rgba(230,57,70,.30) inset;}
 
 .bio{
   max-width:1000px;
@@ -175,49 +215,103 @@ h3{
   text-align:center;
 }
 
-.bio strong{font-weight:600; color:#dedee6}
+.bio strong{
+  display:block;
+  font-weight:500;
+  color:#dedee6;
+  background:rgba(255,255,255,.03);
+  padding:28px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.05);
+  box-shadow:var(--shadow);
+  line-height:2;
+}
 
-/* =====================
-   Cards de Combos
-===================== */
+.menu{
+  max-width:1100px;
+  margin:auto;
+}
+
+.menu ul{
+  list-style:none;
+  margin-bottom:26px;
+  display:grid;
+  gap:12px;
+  padding:0 10px;
+}
+
+.menu li{
+  background:linear-gradient(180deg,#1f1f1f,#191919);
+  padding:16px 18px;
+  border-radius:14px;
+  transition:.25s ease;
+  box-shadow:0 0 0 1px rgba(255,255,255,.03) inset;
+  position:relative;
+  overflow:hidden;
+}
+
+.menu li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background:var(--danger);
+  opacity:.8;
+}
+
+.menu li:hover{
+  transform:translateX(5px);
+  background-color:#242428;
+  box-shadow:
+  0 0 0 1px rgba(230,57,70,.30) inset,
+  0 10px 20px rgba(0,0,0,.18);
+}
 
 .cards-container{
   width:100%;
   display:flex;
   justify-content:center;
   align-items:stretch;
-  gap:22px;
+  gap:24px;
   flex-wrap:nowrap;
-  margin-top:26px;
+  margin-top:30px;
   overflow-x:auto;
-  padding:0 12px;
+  padding:10px 16px 24px;
   scroll-snap-type:x mandatory;
 }
 
-.cards-container::-webkit-scrollbar{height:10px}
-.cards-container::-webkit-scrollbar-thumb{background:rgba(230,57,70,.35); border-radius:999px}
-
-.card{
-  min-width:270px;
-  max-width:270px;
-  background:linear-gradient(180deg, rgba(34,34,38,.92), rgba(21,21,24,.92));
-  border:1px solid rgba(230,57,70,.35);
-  border-radius:18px;
-  overflow:hidden;
-  transition:.28s;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-  position:relative;
-  scroll-snap-align:start;
+.cards-container::-webkit-scrollbar{
+  height:10px;
 }
 
-/* borda glow */
+.cards-container::-webkit-scrollbar-thumb{
+  background:rgba(230,57,70,.35);
+  border-radius:999px;
+}
+
+.card{
+  min-width:280px;
+  max-width:280px;
+  background:linear-gradient(180deg, rgba(34,34,38,.92), rgba(21,21,24,.92));
+  border:1px solid rgba(230,57,70,.35);
+  border-radius:22px;
+  overflow:hidden;
+  transition:.30s ease;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  position:relative;
+  scroll-snap-align:center;
+}
+
 .card::before{
   content:"";
   position:absolute;
   inset:-1px;
-  background:radial-gradient(600px 200px at 20% 0%, rgba(230,57,70,.35), transparent 55%),
-             radial-gradient(500px 200px at 90% 20%, rgba(0,255,136,.16), transparent 60%);
-  opacity:.0;
+  background:
+  radial-gradient(600px 200px at 20% 0%, rgba(230,57,70,.35), transparent 55%),
+  radial-gradient(500px 200px at 90% 20%, rgba(0,255,136,.16), transparent 60%);
+  opacity:0;
   transition:.28s;
   pointer-events:none;
 }
@@ -228,36 +322,37 @@ h3{
   box-shadow:0 18px 46px rgba(255,82,82,.14);
 }
 
-.card:hover::before{opacity:1}
+.card:hover::before{
+  opacity:1;
+}
 
-/* imagem com overlay */
 .card img{
   width:100%;
   height:225px;
   object-fit:cover;
-  transform:scale(1.02);
   transition:.35s;
   filter:saturate(1.05) contrast(1.03);
 }
 
-.card:hover img{transform:scale(1.06)}
+.card:hover img{
+  transform:scale(1.06);
+}
 
 .card-content{
-  padding:20px 18px 14px;
+  padding:20px 18px 16px;
   text-align:center;
 }
 
 .card h3{
   color:#ff5252;
-  font-size:23px;
+  font-size:24px;
   margin-bottom:8px;
-  letter-spacing:.2px;
   text-shadow:0 0 18px rgba(230,57,70,.15);
 }
 
 .card p{
   color:#ccc;
-  margin:10px 0 14px;
+  margin:10px 0 16px;
   min-height:44px;
   font-size:14.5px;
 }
@@ -270,7 +365,7 @@ h3{
 }
 
 .preco{
-  font-size:26px;
+  font-size:28px;
   font-weight:950;
   color:#fff;
   position:relative;
@@ -288,24 +383,39 @@ h3{
   opacity:.55;
 }
 
-
-/* =====================
-   Pedidos / Carrinho
-===================== */
-
 .Pedidos{
   max-width:1000px;
   margin:60px auto;
-  background-color:rgba(27,27,30,.92);
+  background:rgba(27,27,30,.92);
   border:2px solid rgba(230,57,70,.65);
-  border-radius:18px;
-  padding:36px;
+  border-radius:24px;
+  padding:38px;
   box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
 
-.Pedidos h2{margin-bottom:16px; font-size:clamp(26px, 3vw, 38px)}
+.Pedidos::before{
+  content:"";
+  position:absolute;
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle, rgba(230,57,70,.14), transparent 70%);
+  top:-200px;
+  right:-120px;
+}
 
-.pedido-subtitulo{ text-align:center; color:var(--muted-2); margin-bottom:30px; font-size:clamp(14px, 2vw, 16px)}
+.Pedidos h2{
+  margin-bottom:16px;
+  font-size:clamp(26px, 3vw, 38px);
+}
+
+.pedido-subtitulo{
+  text-align:center;
+  color:var(--muted-2);
+  margin-bottom:30px;
+  font-size:clamp(14px, 2vw, 16px);
+}
 
 .pedido-grid{
   display:grid;
@@ -313,166 +423,264 @@ h3{
   gap:18px;
 }
 
-.input-box{display:flex; flex-direction:column}
+.input-box{
+  display:flex;
+  flex-direction:column;
+}
 
-.input-box label{margin-bottom:8px; font-weight:800; color:#fff}
+.input-box label{
+  margin-bottom:8px;
+  font-weight:800;
+  color:#fff;
+}
 
 .Pedidos select,
-.Pedidos input{
+.Pedidos input,
+.Pedidos textarea,
+.final input,
+.final textarea,
+.final select{
   width:100%;
-  padding:14px;
+  padding:15px;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   background-color:var(--panel-2);
   color:#fff;
   outline:none;
   transition:.25s;
+  font-size:15px;
 }
-
-.Pedidos textarea{width:100%; padding:14px; border-radius:12px; border:none; background-color:var(--panel-2); color:#fff; outline:none}
 
 .Pedidos select:focus,
 .Pedidos input:focus,
-.Pedidos textarea:focus{
+.Pedidos textarea:focus,
+.final input:focus,
+.final textarea:focus,
+.final select:focus{
   border:1px solid rgba(230,57,70,.8);
   box-shadow:0 0 0 3px rgba(230,57,70,.15);
+  transform:translateY(-1px);
 }
 
 .totalBox{
-  margin-top:26px;
+  margin-top:28px;
   background-color:var(--panel-2);
-  border-radius:14px;
-  padding:22px;
+  border-radius:18px;
+  padding:24px;
   text-align:center;
   border:1px solid rgba(255,255,255,.05);
 }
 
-.totalBox h3{margin-bottom:8px; color:#fff; font-size:18px}
+.totalBox h3{
+  margin-bottom:8px;
+  color:#fff;
+  font-size:18px;
+}
 
-#total{font-size:clamp(26px, 3vw, 36px); font-weight:900; color:var(--accent)}
+#total{
+  font-size:clamp(28px, 3vw, 38px);
+  font-weight:900;
+  color:var(--accent);
+}
 
-.btn-pedido{
+.btn-pedido,
+.final button{
   width:100%;
-  margin-top:18px;
-  padding:14px;
+  margin-top:20px;
+  padding:16px;
   border:none;
-  border-radius:12px;
+  border-radius:14px;
   background-color:var(--danger);
   color:#fff;
   font-size:18px;
   font-weight:900;
   cursor:pointer;
   transition:.25s;
+  position:relative;
+  overflow:hidden;
 }
 
-.btn-pedido:hover{background-color:var(--danger-2); transform:translateY(-2px); box-shadow:0 12px 30px rgba(230,57,70,.22)}
+.btn-pedido::before,
+.final button::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  transition:.5s;
+}
 
-#resultadoPedido{margin-top:18px; text-align:center; display:none;}
+.btn-pedido:hover::before,
+.final button:hover::before{
+  left:100%;
+}
 
-.erro{color:#ffb3b3}
-.sucesso{color:#00ff88}
+.btn-pedido:hover,
+.final button:hover{
+  background-color:var(--danger-2);
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(230,57,70,.22);
+}
 
-/* =====================
-   Contato
-===================== */
+#resultadoPedido,
+#resultadoContato{
+  margin-top:18px;
+  text-align:center;
+}
+
+.erro{
+  color:#ffb3b3;
+}
+
+.sucesso{
+  color:#00ff88;
+}
 
 .final{
   max-width:900px;
   margin:auto;
   background-color:rgba(27,27,30,.92);
-  border-radius:15px;
-  padding:30px;
+  border-radius:24px;
+  padding:34px;
   border:1px solid rgba(255,255,255,.06);
   box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
-.final label{display:block; margin-top:14px; margin-bottom:6px; font-weight:800}
-
-.final input, .final textarea{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background-color:var(--panel-2);
-  color:#fff;
-  outline:none;
+.final label{
+  display:block;
+  margin-top:16px;
+  margin-bottom:8px;
+  font-weight:800;
 }
 
-.final textarea{resize:none; height:120px}
-
-.final input:focus, .final textarea:focus{
-  border:1px solid rgba(230,57,70,.8);
-  box-shadow:0 0 0 3px rgba(230,57,70,.15);
+.final textarea{
+  resize:none;
+  min-height:130px;
 }
 
-.final button{
-  width:100%;
-  margin-top:20px;
-  padding:15px;
-  border:none;
-  border-radius:12px;
-  background-color:var(--danger);
-  color:#fff;
-  font-size:18px;
-  cursor:pointer;
-  transition:.25s;
-  font-weight:900;
+.clientes{
+  max-width:1000px;
+  margin:60px auto;
+  padding:0 12px;
 }
 
-.final button:hover{background-color:var(--danger-2); transform:translateY(-2px)}
-
-#resultadoContato{margin-top:18px; text-align:center;}
-
-/* =====================
-   Clientes
-===================== */
-
-.clientes{max-width:1000px; margin:60px auto; padding:0 12px}
+.clientes h1{
+  text-align:center;
+  margin-bottom:28px;
+  color:var(--danger);
+  font-size:clamp(28px, 3vw, 40px);
+}
 
 .cliente-card{
-  background-color:#1f1f1f;
+  background:linear-gradient(180deg,#1f1f1f,#191919);
   border-left:5px solid var(--danger);
   padding:25px;
-  border-radius:15px;
-  margin-bottom:20px;
+  border-radius:18px;
+  margin-bottom:22px;
   transition:.25s;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
 }
 
-.cliente-card:hover{transform:translateY(-5px); background-color:#232327}
+.cliente-card:hover{
+  transform:translateY(-6px);
+  background-color:#232327;
+}
 
-.cliente-card h2{color:#fff; text-align:left; margin-bottom:10px}
-.cliente-card p{color:#ccc; text-align:left}
-.cliente-card span{font-size:22px; color:#ffd166}
+.cliente-card h2{
+  color:#fff;
+  text-align:left;
+  margin-bottom:10px;
+}
 
-/* =====================
-   Rodapé
-===================== */
+.cliente-card p{
+  color:#ccc;
+  text-align:left;
+}
+
+.cliente-card span{
+  font-size:22px;
+  color:#ffd166;
+}
 
 footer{
   background-color:#121214;
-  padding:30px 12px;
-  margin-top:50px;
+  padding:34px 12px;
+  margin-top:60px;
   text-align:center;
   border-top:2px solid var(--danger);
 }
 
-#rodape p{color:#d3d3dd}
-
-/* =====================
-   Responsivo
-===================== */
+#rodape p{
+  color:#d3d3dd;
+  margin:4px 0;
+}
 
 @media(max-width:900px){
-  .slide img{height:360px}
-  .pedido-grid{grid-template-columns:1fr}
-  .card{min-width:240px; max-width:240px}
+
+  .slide img{
+    height:360px;
+  }
+
+  .pedido-grid{
+    grid-template-columns:1fr;
+  }
+
+  .card{
+    min-width:240px;
+    max-width:240px;
+  }
+
+  .Pedidos,
+  .final{
+    padding:26px;
+  }
 }
 
 @media(max-width:480px){
-  .cabecalho{padding:22px 12px}
-  .navegacao{gap:10px}
-  .prev{left:8px} .next{right:8px}
-  .slide img{height:270px}
-  .Ped id{} /* (placeholder) */
-}
 
+  .cabecalho{
+    padding:22px 12px;
+  }
+
+  .navegacao{
+    gap:10px;
+  }
+
+  .navegacao a{
+    width:100%;
+    text-align:center;
+  }
+
+  .prev{
+    left:8px;
+  }
+
+  .next{
+    right:8px;
+  }
+
+  .slide img{
+    height:270px;
+  }
+
+  .bio strong{
+    padding:22px;
+    font-size:14px;
+  }
+
+  .Pedidos,
+  .final{
+    padding:22px 18px;
+  }
+
+  .card{
+    min-width:85%;
+    max-width:85%;
+  }
+
+  .cliente-card{
+    padding:20px;
+  }
+}
