@@ -157,117 +157,7 @@
 
 
 
-            <section id="combos">
-
-
-                <h2>Hambúrguers Recomendados🍔</h2>
-
-                <div class="cards-container">
-
-                    <article class="card">
-
-                        <img src="../hamburgueria/img/lanche card 1.png">
-
-                        <div class="card-content">
-
-                            <h3>X-Burguer</h3>
-
-                            <p class="descricao">
-                                Hambúrguer artesanal e cheddar.
-                            </p>
-
-                            <div class="card-footer">
-
-                                <span class="preco">R$ 22,90</span>
-
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                    <article class="card">
-
-                        <img src="../hamburgueria/img/lanche card 2-Salada.png">
-
-                        <div class="card-content">
-
-                            <h3>X-Salada</h3>
-
-                            <p class="descricao">
-                                Hambúrguer artesanal com Salada.
-                            </p>
-
-                            <div class="card-footer">
-
-                                <span class="preco">R$ 26,90</span>
-
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                    <article class="card">
-
-
-
-
-                        <img src="../hamburgueria/img/lanche card 3-0bacon.png">
-
-                        <div class="card-content">
-
-                            <h3>X-Bacon</h3>
-
-                            <p class="descricao">
-                                Bacon crocante e cheddar.
-                            </p>
-
-                            <div class="card-footer">
-
-                                <span class="preco">R$ 29,90</span>
-
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                    <article class="card">
-
-                        <img src="../hamburgueria/img/lanche card-especial.png">
-
-                        <div class="card-content">
-
-                            <h3>Hambúrguer Da casa</h3>
-
-                            <p class="descricao">
-                                ingredientes Especiais Da casa !
-                            </p>
-
-                            <div class="card-footer">
-
-                                <span class="preco">R$ 35,00</span>
-
-
-                                </button>
-
-
-
-                            </div>
-
-                        </div>
-                    </article>
-
+          
                 </div>
 
                 <div class="Pedidos" id="Pedidos">
@@ -307,6 +197,14 @@
                                     <option value="36.90">Truffle Burger – R$ 36,90</option>
                                     <option value="42.90">Hambúrguer da Casa – R$ 42,90</option>
                                 </optgroup>
+
+                                <optgroup label="🎁 Combos Promocionais">
+                                    <option value="44.70">Combo Clássico – R$ 44,70</option>
+                                    <option value="65.70">Combo Especial – R$ 65,70</option>
+                                    <option value="66.80">Combo Deluxe – R$ 66,80</option>
+                                    <option value="50.70">Combo Vegetariano – R$ 50,70</option>
+                                </optgroup>
+
 
                                 <optgroup label="🍟 Acompanhamentos">
                                     <option value="10.90">Batata frita P – R$ 10,90</option>
@@ -392,6 +290,59 @@
                     const lanche = document.getElementById("lanche");
                     const quantidade = document.getElementById("quantidade");
                     const total = document.getElementById("total");
+
+                    const combos = {
+                        classico: {
+                            nome: "Combo Clássico",
+                            preco: 44.70
+                        },
+                        especial: {
+                            nome: "Combo Especial",
+                            preco: 65.70
+                        },
+                        deluxe: {
+                            nome: "Combo Deluxe",
+                            preco: 66.80
+                        },
+                        veggie: {
+                            nome: "Combo Vegetariano",
+                            preco: 50.70
+                        }
+                    };
+
+                    function adicionarComboAoCarrinho(comboId) {
+                        const combo = combos[comboId];
+                        if (!combo) return;
+
+                        // seta combo no "carrinho" (select único)
+                        lanche.value = String(combo.preco);
+                        quantidade.value = 1;
+                        atualizarTotal();
+
+                        // mostra imediatamente o resumo para pagamento
+                        const resultado = document.getElementById("resultadoPedido");
+                        const nomeCliente = document.getElementById("nomeCliente").value.trim();
+                        const pagamento = document.getElementById("pagamento").value;
+
+                        const preco = parseFloat(lanche.value) || 0;
+                        const qtd = parseInt(quantidade.value) || 1;
+                        const valorFinal = preco * qtd;
+
+                        resultado.style.display = "block";
+                        resultado.innerHTML = `
+                            <h3 class="sucesso">✅ Combo adicionado ao carrinho!</h3>
+                            <br>
+                            <p><strong>Pedido:</strong> ${combo.nome}</p>
+                            <p><strong>Quantidade:</strong> ${qtd}</p>
+                            <p><strong>Preço unitário:</strong> R$ ${preco.toFixed(2).replace(".", ",")}</p>
+                            <p><strong>Total:</strong> R$ ${valorFinal.toFixed(2).replace(".", ",")}</p>
+
+                            ${pagamento ? `<p><strong>Pagamento:</strong> ${pagamento}</p>` : ""}
+                            ${nomeCliente ? `<p><strong>Cliente:</strong> ${nomeCliente}</p>` : ""}
+                            <p>Agora é só preencher nome/forma de pagamento e clicar em <strong>Finalizar Pedido</strong>.</p>
+                        `;
+                    }
+
 
                     function atualizarTotal() {
 
@@ -483,48 +434,181 @@
             <br>
             <div class="final" id="final">
 
-                <h2>Entre em Contato 📱</h2>
+                <h2>📱 Entre em Contato</h2>
 
-                <label for="nomeContato">Nome:</label>
-                <input type="text" id="nomeContato" placeholder="Digite seu nome">
+                <p class="texto-contato">
+                    Ficou com dúvidas, sugestões ou quer falar com nossa equipe?
+                </p>
 
-                <label for="emailContato">Email:</label>
-                <input type="email" id="emailContato" placeholder="Digite seu email">
+                <div class="contato-container">
 
-                <label for="telefoneContato">Telefone:</label>
-                <input type="tel" id="telefoneContato" placeholder="Digite seu telefone">
-                <label for="mensagemContato">Mensagem:</label>
-                <textarea id="mensagemContato" placeholder="Digite sua mensagem"></textarea>
+                    <div class="input-contato">
 
-                <button onclick="enviarContato()">Enviar Mensagem</button>
+                        <label>👤 Nome</label>
+
+                        <input type="text" id="nomeContato" placeholder="Digite seu nome">
+
+                    </div>
+
+                    <div class="input-contato">
+
+                        <label>📧 Email</label>
+
+                        <input type="email" id="emailContato" placeholder="Digite seu email">
+
+                    </div>
+
+                    <div class="input-contato">
+
+                        <label>📞 Telefone</label>
+
+                        <input type="tel" id="telefoneContato" placeholder="Digite seu telefone">
+
+                    </div>
+
+                    <div class="input-contato">
+
+                        <label>📝 Assunto</label>
+
+                        <input type="text" id="assuntoContato" placeholder="Digite o assunto">
+
+                    </div>
+
+                    <div class="input-contato mensagem-box">
+
+                        <label>💬 Mensagem</label>
+
+                        <textarea id="mensagemContato" placeholder="Digite sua mensagem"></textarea>
+
+                    </div>
+
+                </div>
+
+                <button class="btn-contato" onclick="enviarContato()">
+
+                    🚀 Enviar Mensagem
+
+                </button>
 
                 <div id="resultadoContato"></div>
-
 
                 <script>
 
                     function enviarContato() {
 
-                        const nome = document.getElementById("nomeContato").value;
-                        const email = document.getElementById("emailContato").value;
-                        const telefone = document.getElementById("telefoneContato").value;
-                        const assunto = document.getElementById("assuntoContato").value;
-                        const mensagem = document.getElementById("mensagemContato").value;
+                        const nome =
+                            document.getElementById("nomeContato").value.trim();
 
-                        const resultado = document.getElementById("resultadoContato");
+                        const email =
+                            document.getElementById("emailContato").value.trim();
 
-                        if (nome === "" || email === "" || telefone === "" || assunto === "" || mensagem === "") {
+                        const telefone =
+                            document.getElementById("telefoneContato").value.trim();
+
+                        const assunto =
+                            document.getElementById("assuntoContato").value.trim();
+
+                        const mensagem =
+                            document.getElementById("mensagemContato").value.trim();
+
+                        const resultado =
+                            document.getElementById("resultadoContato");
+
+                        if (
+                            nome === "" ||
+                            email === "" ||
+                            telefone === "" ||
+                            assunto === "" ||
+                            mensagem === ""
+                        ) {
+
+                            resultado.style.display = "block";
 
                             resultado.innerHTML = `
-            <p style="color:red;">
-                ⚠️ Preencha todos os campos!
-            </p>
+
+        <h3 style="color:red;">
+            ❌ Preencha todos os campos!
+        </h3>
+
         `;
 
                             return;
                         }
 
+                        resultado.style.display = "block";
+
                         resultado.innerHTML = `
+
+    <h2 style="color:#00ff88;">
+        ✅ Mensagem enviada!
+    </h2>
+
+    <br>
+
+    <p>
+        Obrigado pelo contato,
+        <strong>${nome}</strong> 🍔
+    </p>
+
+    <p>
+        Nossa equipe responderá em breve.
+    </p>
+
+    <br>
+
+    <p>
+        📧 Email: <strong>${email}</strong>
+    </p>
+
+    <p>
+        📞 Telefone: <strong>${telefone}</strong>
+    </p>
+
+    `;
+
+
+
+                        document.getElementById("nomeContato").value = "";
+
+                        document.getElementById("emailContato").value = "";
+
+                        document.getElementById("telefoneContato").value = "";
+
+                        document.getElementById("assuntoContato").value = "";
+
+                        document.getElementById("mensagemContato").value = "";
+                    }
+
+                </script>
+
+            </div>
+            <div id="resultadoContato"></div>
+
+
+            <script>
+
+                function enviarContato() {
+
+                    const nome = document.getElementById("nomeContato").value;
+                    const email = document.getElementById("emailContato").value;
+                    const telefone = document.getElementById("telefoneContato").value;
+                    const assunto = document.getElementById("assuntoContato").value;
+                    const mensagem = document.getElementById("mensagemContato").value;
+
+                    const resultado = document.getElementById("resultadoContato");
+
+                    if (nome === "" || email === "" || telefone === "" || assunto === "" || mensagem === "") {
+
+                        resultado.innerHTML = `
+            <p style="color:red;">
+                ⚠️ Preencha todos os campos!
+            </p>
+        `;
+
+                        return;
+                    }
+
+                    resultado.innerHTML = `
         <h3 style="color:#4CAF50;">
             ✅ Mensagem enviada com sucesso!
         </h3>
@@ -534,14 +618,14 @@
         <p>Responderemos em breve no email: <strong>${email}</strong></p>
     `;
 
-                        document.getElementById("nomeContato").value = "";
-                        document.getElementById("emailContato").value = "";
-                        document.getElementById("telefoneContato").value = "";
-                        document.getElementById("assuntoContato").value = "";
-                        document.getElementById("mensagemContato").value = "";
-                    }
+                    document.getElementById("nomeContato").value = "";
+                    document.getElementById("emailContato").value = "";
+                    document.getElementById("telefoneContato").value = "";
+                    document.getElementById("assuntoContato").value = "";
+                    document.getElementById("mensagemContato").value = "";
+                }
 
-                </script>
+            </script>
 
             </div>
 
